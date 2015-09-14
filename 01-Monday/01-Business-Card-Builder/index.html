@@ -60,12 +60,32 @@
       background-color: #F5FF8D;
     }
 
+    .error{
+        display: none;
+        margin-left: 10px;
+    }       
+     
+    .error_show{
+        color: red;
+        margin-left: 10px;
+    }
+
+    input.invalid, textarea.invalid{
+        border: 2px solid red;
+    }
+     
+    input.valid, textarea.valid{
+        border: 2px solid green;
+    }
+
   </style>
 </head>
 <body>
   <h1>Business Card Builder</h1>
   <form>
     <input type="text" name="name" placeholder="Name">
+    <span class="error">This field is required</span>
+
     <input type="text" name="job-title" placeholder="Job title">
     <input type="text" name="phone" placeholder="Phone">
     <input type="text" name="email" placeholder="Email">
@@ -92,7 +112,37 @@
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script>
     (function() {
-      $('#submit').on('click', function(event) {
+   
+      $('[name="name"]').on('input', function() {
+          var input=$(this);
+          var is_name=input.val();
+          if(is_name){input.removeClass("invalid").addClass("valid");}
+          else{input.removeClass("valid").addClass("invalid");}
+      });
+
+      $('[name="job-title"]').on('input', function() {
+          var input=$(this);
+          var is_name=input.val();
+          if(is_name){input.removeClass("invalid").addClass("valid");}
+          else{input.removeClass("valid").addClass("invalid");}
+      });
+
+      $('[name="phone"]').on('input', function() {
+          var input=$(this);
+          var is_name=input.val();
+          if(is_name){input.removeClass("invalid").addClass("valid");}
+          else{input.removeClass("valid").addClass("invalid");}
+      });
+
+      $('[name="email"]').on('input', function() {
+          var input=$(this);
+          var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+          var is_email=re.test(input.val());
+          if(is_email){input.removeClass("invalid").addClass("valid");}
+          else{input.removeClass("valid").addClass("invalid");}
+      });
+
+      $('form').on('submit', function(event) {
         event.preventDefault();
           var name = $('[name="name"]').val();
           var job = $('[name="job-title"]').val();
@@ -103,7 +153,6 @@
           $('#phone').text(phone);
           $('#email').text(email);
           $('#email').wrap('<a href="mailto:' + email + '"></a>');
-
 
         // your code for creating the business card goes here
         // get the values from the form fields
@@ -129,7 +178,11 @@
         // add the 'yellow' class business card
         // you can also make your own classes and add them!
       });
+
     })()
+
+
+
   </script>
 </body>
 </html>
