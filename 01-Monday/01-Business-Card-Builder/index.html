@@ -60,14 +60,8 @@
       background-color: #F5FF8D;
     }
 
-    .error{
-        display: none;
-        margin-left: 10px;
-    }       
-     
-    .error_show{
-        color: red;
-        margin-left: 10px;
+    .cool {
+      border: 1px solid green;
     }
 
     input.invalid, textarea.invalid{
@@ -84,8 +78,6 @@
   <h1>Business Card Builder</h1>
   <form>
     <input type="text" name="name" placeholder="Name">
-    <span class="error">This field is required</span>
-
     <input type="text" name="job-title" placeholder="Job title">
     <input type="text" name="phone" placeholder="Phone">
     <input type="text" name="email" placeholder="Email">
@@ -112,8 +104,6 @@
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script>
     (function() {
-   
-     
       $('form').on('submit', function(event) {
         event.preventDefault();
           var name = $('[name="name"]').val();
@@ -131,7 +121,7 @@
         // add them to the business card
       });
 
-      $('button.blue', 'button.yellow').on('click', function(event) {
+      $('button.blue').on('click', function(event) {
         event.preventDefault()
         $('div.biz-card').removeClass('yellow'); 
         $('div.biz-card').toggleClass('blue'); 
@@ -140,15 +130,24 @@
         // your code for changing the colours goes here
         // add the 'blue' class business card
       });
-      // $('button.yellow').on('click', function(event) {
-      //   event.preventDefault()
-      //   $('div.biz-card').removeClass('blue'); 
-      //   $('div.biz-card').toggleClass('yellow'); 
+      $('button.yellow').on('click', function(event) {
+        event.preventDefault()
+        $('div.biz-card').removeClass('blue'); 
+        $('div.biz-card').toggleClass('yellow'); 
 
 
         // your code for changing the colours goes here
         // add the 'yellow' class business card
         // you can also make your own classes and add them!
+      });
+
+      $('input[name=name').on('input', function(event) {
+        var input = $(event.target)
+        if (input.val().length > 3) {
+          input.toggleClass('cool', true)
+        } else {
+          input.toggleClass('cool', false)
+        }
       });
 
     })()
