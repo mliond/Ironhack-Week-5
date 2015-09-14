@@ -113,35 +113,7 @@
   <script>
     (function() {
    
-      $('[name="name"]').on('input', function() {
-          var input=$(this);
-          var is_name=input.val();
-          if(is_name){input.removeClass("invalid").addClass("valid");}
-          else{input.removeClass("valid").addClass("invalid");}
-      });
-
-      $('[name="job-title"]').on('input', function() {
-          var input=$(this);
-          var is_name=input.val();
-          if(is_name){input.removeClass("invalid").addClass("valid");}
-          else{input.removeClass("valid").addClass("invalid");}
-      });
-
-      $('[name="phone"]').on('input', function() {
-          var input=$(this);
-          var is_name=input.val();
-          if(is_name){input.removeClass("invalid").addClass("valid");}
-          else{input.removeClass("valid").addClass("invalid");}
-      });
-
-      $('[name="email"]').on('input', function() {
-          var input=$(this);
-          var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-          var is_email=re.test(input.val());
-          if(is_email){input.removeClass("invalid").addClass("valid");}
-          else{input.removeClass("valid").addClass("invalid");}
-      });
-
+     
       $('form').on('submit', function(event) {
         event.preventDefault();
           var name = $('[name="name"]').val();
@@ -159,7 +131,7 @@
         // add them to the business card
       });
 
-      $('button.blue').on('click', function(event) {
+      $('button.blue', 'button.yellow').on('click', function(event) {
         event.preventDefault()
         $('div.biz-card').removeClass('yellow'); 
         $('div.biz-card').toggleClass('blue'); 
@@ -168,10 +140,10 @@
         // your code for changing the colours goes here
         // add the 'blue' class business card
       });
-      $('button.yellow').on('click', function(event) {
-        event.preventDefault()
-        $('div.biz-card').removeClass('blue'); 
-        $('div.biz-card').toggleClass('yellow'); 
+      // $('button.yellow').on('click', function(event) {
+      //   event.preventDefault()
+      //   $('div.biz-card').removeClass('blue'); 
+      //   $('div.biz-card').toggleClass('yellow'); 
 
 
         // your code for changing the colours goes here
