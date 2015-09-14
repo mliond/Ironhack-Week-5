@@ -85,6 +85,7 @@
     <div class="colours">
       <button class="blue">Blue</button>
       <button class="yellow">Yellow</button>
+      <button class="fadeout">Fadeout</button>
     </div>
   </form>
 
@@ -139,6 +140,10 @@
         // your code for changing the colours goes here
         // add the 'yellow' class business card
         // you can also make your own classes and add them!
+      });
+      $('button.fadeout').on('click', function(event) {
+        event.preventDefault()
+        $('body').fadeOut('slow'); 
       });
 
       $('input[name=name').on('input', function(event) {
