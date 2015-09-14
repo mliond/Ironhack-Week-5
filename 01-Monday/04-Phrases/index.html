@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title Page</title>
+
+  <style>
+    
+    .hide {
+      display: none;
+    }
+
+    .highlight {
+      border: 1px solid red;
+    }
+
+  </style>
+  </head>
+  <body>
+    <h1 class="text-center">Random phrase</h1>
+
+    <h3 class="random-phrase"></h3>
+    <button class="random">Randomize</button>
+
+    <form>
+      <input type="text" class="new-phrase">
+      <!-- <input type="submit" class="submit"> -->
+    </form>
+
+    <a href="#" class="hide-show">Show</a>
+
+    <ul class="list-of-phrases hide">
+    </ul>
+
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script>
+        var phrases = ["I like pie", "Dogs like oranges", "Cats like ketchup"];
+      (function() {
+        
+        $(document).on('ready', function(event) {
+          renderList();
+        });
+        $(document).on('ready', function(event) {
+          var randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+          $('h3.random-phrase').text(randomPhrase);
+        });
+        $('button.random').on('click', function(event) {
+          event.preventDefault();
+          var randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+          $('h3.random-phrase').text(randomPhrase);
+          // highlightList(randomPhrase);
+        });
+        $('form').on('submit', function(event) {
+          event.preventDefault();
+          var input = $('input.new-phrase').val();
+          phrases.push(input);
+          $('input.new-phrase').val('');
+          renderList();
+        });
+        $('a.hide-show').on('click', function(event) {
+          event.preventDefault();
+          if ($('a.hide-show').text() === 'Show') {
+            $('a.hide-show').text('Hide');
+          } else {
+            $('a.hide-show').text('Show');
+          }
+          $('ul.list-of-phrases').toggleClass('hide');
+        });
+        $(document).on('click', 'button.remove', function() {
+          $(this).parent().remove();
+        });
+      })()
+
+        function renderList() {
+          $('ul.list-of-phrases').text('');
+          phrases.forEach(function(value, key) {
+            $('ul.list-of-phrases').append('<li value=' + value + '>' + value + ' <button class="remove">X</button></li>');
+          })
+        };
+
+        // function highlightList(randomPhrase) {
+        //   $('ul.list-of-phrases li').each(function(key, value) {
+        //     if ($(this).attr('value') === randomPhrase) {
+        //       $(this).toggleClass('highlight');
+        //     };
+        //   });
+        // };
+
+
+
+
+    </script>
+  </body>
+</html>
