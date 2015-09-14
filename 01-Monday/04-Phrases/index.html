@@ -21,7 +21,7 @@
   <body>
     <h1 class="text-center">Random phrase</h1>
 
-    <h3 class="random-phrase"></h3>
+    <h3 class="random-phrase">test</h3>
     <button class="random">Randomize</button>
 
     <form>
@@ -32,6 +32,7 @@
     <a href="#" class="hide-show">Show</a>
 
     <ul class="list-of-phrases hide">
+      <!-- <li class="test">a</li> -->
     </ul>
 
     <!-- jQuery -->
@@ -40,20 +41,18 @@
     <script>
         var phrases = ["I like pie", "Dogs like oranges", "Cats like ketchup"];
       (function() {
-        
+
         $(document).on('ready', function(event) {
+          showRandomPhrase();
           renderList();
         });
-        $(document).on('ready', function(event) {
-          var randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-          $('h3.random-phrase').text(randomPhrase);
-        });
         $('button.random').on('click', function(event) {
-          event.preventDefault();
-          var randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-          $('h3.random-phrase').text(randomPhrase);
-          // highlightList(randomPhrase);
+          showRandomPhrase();
         });
+        // $('form').keypress(function() {
+        //   console.log('hi');
+        //   $('ul.list-of-phrases li.test').append('hi');
+        // });
         $('form').on('submit', function(event) {
           event.preventDefault();
           var input = $('input.new-phrase').val();
@@ -72,26 +71,36 @@
         });
         $(document).on('click', 'button.remove', function() {
           $(this).parent().remove();
+          var index = $(this).parent().attr('id');
+          phrases.splice(index, 1);
         });
       })()
 
-        function renderList() {
-          $('ul.list-of-phrases').text('');
-          phrases.forEach(function(value, key) {
-            $('ul.list-of-phrases').append('<li value=' + value + '>' + value + ' <button class="remove">X</button></li>');
-          })
-        };
+      function showRandomPhrase() {
+        event.preventDefault();
+        var randomNumber = Math.floor(Math.random() * phrases.length);
+        var randomPhrase = phrases[randomNumber];
+        $('h3.random-phrase').text(randomPhrase);
+        $('h3.random-phrase').attr('id', randomNumber);
+        renderList();
+      };
 
-        // function highlightList(randomPhrase) {
-        //   $('ul.list-of-phrases li').each(function(key, value) {
-        //     if ($(this).attr('value') === randomPhrase) {
-        //       $(this).toggleClass('highlight');
-        //     };
-        //   });
-        // };
+      function renderList() {
+        $('ul.list-of-phrases').text('');
+        phrases.forEach(function(value, key) {
+          $('ul.list-of-phrases').append('<li id=' + key + '>' + value + ' <button class="remove">X</button></li>');
+        })
+        highlightList();
+      };
 
-
-
+      function highlightList() {
+        var random = $('h3.random-phrase')
+        $('ul.list-of-phrases li').each(function(key, value) {
+          if ($(this).attr('id') === random.attr('id')) {
+            $(this).toggleClass('highlight');
+          }
+        });
+      };
 
     </script>
   </body>
