@@ -1,0 +1,166 @@
+<html>
+<head>
+  <style type="text/css" media="all">
+    * {
+      box-sizing: border-box;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 100%;
+    }
+
+    body {
+      background-color: #fefefe;
+    }
+
+    .container {
+      margin: 0 auto;
+      width: 960px;
+    }
+
+    .btn {
+      background-color: #d9d9d9;
+      border: 1px solid #c9c9c9;
+      border-radius: 2px;
+      color: #333333;
+      cursor: pointer;
+      display: inline-block;
+      margin: 5px;
+      outline: none;
+      padding: 7px 10px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #c9c9c9;
+    }
+
+    form {
+      margin-top: 10px;
+    }
+
+    form input[type=text] {
+      border: 1px solid #c9c9c9;
+      border-radius: 2px;
+      outline: none;
+      padding: 5px 10px;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+
+    form input[type=text]:hover,
+    form input[type=text]:focus {
+      border: 1px solid #b9b9b9;
+    }
+
+    fieldset div {
+      margin: 10px;
+    }
+
+    .free {
+      color: green;
+    }
+
+    .debt {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="character-form">
+      <fieldset>
+        <legend>Character creation</legend>
+        <div>
+          <label for="">Name</label>
+          <input type="text" name="name" />
+        </div>
+
+        <div>
+          <label for="">Occupation</label>
+          <input type="text" name="occupation" />
+        </div>
+
+        <div>
+          <label for="">Weapon</label>
+          <input type="text" name="weapon" />
+        </div>
+
+        <div>
+          <label for="">Debt?</label>
+          <input type="checkbox" name="debt" />
+        </div>
+
+        <button type="submit" class="btn">Create</button>
+      </fieldset>
+    </form>
+
+    <a id="refresh-characters" class="btn" href="javascript:;">refresh list</a>
+    <span id="status"></span>
+
+    <ul id="character-list">
+    </ul>
+  </div>
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    (function() {
+      function renderCharacters(characters) {
+        var characterList = $('#character-list')
+
+        characterList.empty()
+
+        characters.forEach(function(c) {
+          var characterClass = 'free'
+
+          if (c.debt) characterClass = 'debt'
+
+          characterList.append('<li class="' + characterClass + '">' + c.name + ', ' + c.occupation + '</li>')
+        })
+      }
+
+      function getCharacters() {
+        var request = $.get('http://ironhack-characters.herokuapp.com/characters')
+
+        $('#status').empty().fadeIn()
+
+        request.done(function(response) {
+          renderCharacters(response)
+          $('#status').text('refreshed!').toggleClass('free', true)
+
+          setTimeout(function() {
+            $('#status').fadeOut().toggleClass('free', false)
+          }, 300)
+        })
+
+        request.fail(function() {
+          $('#status').text('failed :(').toggleClass('debt', true)
+
+          setTimeout(function() {
+            $('#status').fadeOut().toggleClass('debt', false)
+          }, 300)
+        })
+      }
+
+      getCharacters()
+
+      $('#refresh-characters').on('click', function() {
+        getCharacters()
+      })
+
+      $('#character-form').on('submit', function(event) {
+        event.preventDefault()
+
+        var data = $(event.target).serialize()
+        var request = $.post('http://ironhack-characters.herokuapp.com/characters', data)
+
+        request.done(function() {
+          $('input').val(null)
+          getCharacters()
+        })
+      })
+    })()
+  </script>
+</body>
+</html>
