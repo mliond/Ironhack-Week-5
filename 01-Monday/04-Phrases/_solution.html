@@ -1,0 +1,120 @@
+<html>
+<head>
+  <style type="text/css" media="all">
+    * {
+      box-sizing: border-box;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 100%;
+    }
+​
+    .container {
+      margin: 0 auto;
+      width: 960px;
+    }
+​
+    .btn {
+      background-color: #d9d9d9;
+      border-radius: 2px;
+      color: #333333;
+      display: inline-block;
+      padding: 5px 10px;
+      text-decoration: none;
+    }
+​
+    .btn:hover {
+      background-color: #c9c9c9;
+    }
+​
+    form {
+      margin-top: 10px;
+    }
+​
+    form input[type=text] {
+      border: 1px solid #c9c9c9;
+      border-radius: 2px;
+      outline: none;
+      padding: 5px 10px;
+    }
+​
+    form input[type=text]:hover,
+    form input[type=text]:focus {
+      border: 1px solid #b9b9b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p id="current-quote"></p>
+​
+    <a id="get-quote" class="btn" href="javascript:;">random quote</a>
+​
+    <form>
+      <input type="text" name="new-quote" />
+    </form>
+​
+    <ul id="quote-list">
+    </ul>
+  </div>
+​
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    (function() {
+      var quotes = [
+        'Javascript is cool',
+        'You know nothing',
+        'For the watch'
+      ]
+​
+      function renderQuote() {
+        var randomNum = Math.floor(Math.random() * (quotes.length))
+​
+        console.log(quotes[randomNum])
+        $('#current-quote').text(quotes[randomNum])
+      }
+​
+      function renderQuoteList() {
+        var quoteList = $('#quote-list')
+        quoteList.empty()
+​
+        quotes.forEach(function(q) {
+          quoteList.append('<li>' + q + '<a class="delete-btn" href="javascript:;">x</a></li>')
+        })
+      }
+​
+      function addQuote(quote) {
+        quotes.push(quote)
+        console.log(quotes)
+​
+        renderQuoteList()
+      }
+​
+      function removeQuote(quote) {
+        quotes = quotes.filter(function(q) {
+          return quote.indexOf(q) < 0
+        })
+​
+        renderQuoteList()
+      }
+​
+      $('form').on('submit', function(event) {
+        event.preventDefault()
+​
+        var newQuote = $('[name=new-quote]').val()
+​
+        addQuote(newQuote)
+      })
+​
+      $('#get-quote').on('click', function() {
+        renderQuote()
+      })
+​
+      $('ul#quote-list').on('click', '.delete-btn', function(event) {
+        removeQuote($(event.target).parent().text())
+      })
+​
+      renderQuote()
+      renderQuoteList()
+    })()
+  </script>
+</body>
+</html>

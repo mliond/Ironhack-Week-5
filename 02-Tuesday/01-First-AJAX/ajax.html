@@ -1,0 +1,75 @@
+<html>
+<head>
+  <title>First Ajax</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Characters from AJAX</h1>
+
+  <form action="" class="new-character">
+    Name:
+    <input type="text" class="name">
+    Weapon:
+    <input type="text" class="weapon">
+    Occupation:
+    <input type="text" class="occupation">
+    <input type="submit">
+  </form>
+
+  <table class="character-list">
+    <tr>
+      <td><strong>Name</strong></td>
+      <td><strong>Weapon</strong></td>
+      <td><strong>Occupation</strong></td>
+    </tr>
+  </table>
+
+  <script>
+    $(document).on('ready', httpRequest);
+    function httpRequest() {
+      $.ajax({
+        url: 'http://ironhack-characters.herokuapp.com/characters',
+        data: '',
+        success: handleCharacters,
+        error: handleError,
+        dataType: 'json'
+      });
+    }
+    function handleCharacters(data) {
+      data.forEach(function(chr) {
+        var listItem = '<tr><td>'+chr.name+'</td><td>'+chr.weapon+'</td><td>'+chr.occupation+'</td></tr>';
+        $('table').append(listItem);
+      });
+    }
+    function handleError (error) {
+      console.log('error', error.responseJSON);
+    }
+
+    $('form').on('submit', httpPost);
+    function newCharacter() {
+      return {
+        name: $('input.name').val(),
+        weapon: $('input.weapon').val(),
+        occupation: $('input.occupation').val()
+      };
+    }
+    function httpPost() {
+      $.ajax({
+        type: 'post',
+        url: 'http://ironhack-characters.herokuapp.com/characters',
+        data: newCharacter(),
+        success: onSaveSuccess,
+        error: onSaveFailure,
+        dataType: 'json'
+      });
+      httpRequest(); // reload the screen
+    }
+    function onSaveSuccess(response) {
+      console.debug('saved', response);
+    }
+    function onSaveFailure(error) {
+      console.error(error.responseJSON);
+    }
+  </script>
+</body>
+</html>
