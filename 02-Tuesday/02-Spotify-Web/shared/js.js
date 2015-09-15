@@ -9,16 +9,8 @@ function spotRequest(event) {
 function handleRequest(data) {
   $('table').empty();
   data.artists.items.forEach(function (i) {
-    // <div class="media">
-    //   <div class="media-left">
-    //     <img src=' + i.images[0].url + '>
-    //   </div>
-    //   <div class="media-body">
-    //     <h4 class="media-heading"><a data_hook=' + i.id + ' class="album-search">' + i.name + '</a></h4>
-    //   </div>
-    // </div>
     var artistPicture = '<tr><td><img src=' + i.images[0].url + ' height="200px"></td>';
-    var artistName = '<td><a data_hook=' + i.id + ' class="album-search">' + i.name + '</a></td></tr>';
+    var artistName = '<td><a class="album-search btn btn-primary btn-lg" data-toggle="modal" data-target=".bs-example-modal-sm" data_hook=' + i.id + ' >' + i.name + '</a></td></tr>';
     var tableRow = artistPicture + artistName;
     $('table').append(tableRow);
   });
@@ -33,12 +25,18 @@ function albumRequest(event) {
 }
 
 function handleRequestAlbum(data) {
-  $('table').empty();
+  // $('table').empty();
+  // data.items.forEach(function (i) {
+  //   var albumPicture = '<tr><td><img src=' + i.images[0].url + ' height="200px"></td>';
+  //   var albumName = '<td><button data_hook=' + i.id + ' class="track-search">' + i.name + '</button></td></tr>';
+  //   var tableRow = albumPicture + albumName;
+  //   $('table').append(tableRow);
+  // });
   data.items.forEach(function (i) {
     var albumPicture = '<tr><td><img src=' + i.images[0].url + ' height="200px"></td>';
     var albumName = '<td><button data_hook=' + i.id + ' class="track-search">' + i.name + '</button></td></tr>';
     var tableRow = albumPicture + albumName;
-    $('table').append(tableRow);
+    $('modal-content.table').append(tableRow);
   });
 }
 
