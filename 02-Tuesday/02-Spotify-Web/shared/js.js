@@ -1,6 +1,6 @@
 $('form').on('submit', artistRequest);
 $('body').on('click', 'a.album-search', albumRequest);
-$('body').on('click', 'button.track-search', trackRequest);
+$('body').on('click', 'a.track-search', trackRequest);
 
 function artistRequest(event) {
   event.preventDefault();
