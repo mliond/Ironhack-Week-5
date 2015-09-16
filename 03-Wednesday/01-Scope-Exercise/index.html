@@ -1,0 +1,28 @@
+<html>
+<head>
+
+</head>
+<body>
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+  <input type="text">
+
+  <script>
+    var elements = document.getElementsByTagName('input');
+    var n = elements.length; // = 10
+
+    for (var i=0; i < n; i++) {
+      elements[i].onclick = function () {
+        console.log('This is element #' + i);
+      };
+    }
+  </script>
+</body>
+</html>
