@@ -35,3 +35,21 @@ function buildURL(lon, lat) {
 function appendImage(url) {
   $('#map-placement').append('<img src=' + url + '>');
 }
+
+$('button#i-was-here').on('click', function(event) {
+  navigator.geolocation.getCurrentPosition(saveLocation, onError, options);
+})
+
+function saveLocation(position) {
+  var lon = position.coords.longitude;
+  var lat = position.coords.latitude;
+  window.localStorage.setItem('a', lon + ',' + lat);
+}
+
+$('button#where-was-i').on('click', function(event) {
+  var locations = window.localStorage.getItem('a');
+  // locations.forEach(function (i) {
+    // $('.locations ul').append('<li>' + i + '</li>');
+  // })
+    $('.locations ul').append('<li>' + locations + '</li>');
+})
