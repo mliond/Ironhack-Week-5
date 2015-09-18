@@ -153,3 +153,7 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   background-color: #45a800;
 }
+
+.media-left img {
+  height: 100px;
+}
