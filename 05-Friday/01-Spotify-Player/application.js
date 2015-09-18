@@ -1,44 +1,53 @@
-function changeTrackName(trackName) {
-  $('p.track-name').text(trackName);
+$('input.search-term').on('input', function(event) {
+  event.preventDefault();
+  var searchTerm = $('input').val();
+  var my_player = new Player(searchTerm);
+  my_player.searchTrack();
+});
+
+var Player = function (searchTerm) {
+  this.searchTerm = searchTerm;
+  this.url = 'https://api.spotify.com/v1/search?type=track&q=' + searchTerm;
 };
 
-function changeTrackArtist(trackArtist) {
+_changeTrackName = function (trackName) {
+  $('p.track-name').text(trackName);
+}
+
+_changeTrackArtist = function(trackArtist) {
   var html = '<a href="#" class="artist-modal" data_hook=' + trackArtist.id + ' >' + trackArtist.name + '</a>'
   $('p.track-artist').html(html);
   $('.media-body h4').text(trackArtist.name);
 };
 
-function changeTrackPreview (trackPreview) {
+_changeTrackPreview = function (trackPreview) {
   $('audio').prop('src', trackPreview);
 };
 
-function searchTrackAlbum(trackId) {
+_searchTrackAlbum = function(trackId) {
   var url = 'https://api.spotify.com/v1/albums/' + trackId;  
   $.get(url, function(album) {
-    changeTrackImage(album);
+    _changeTrackImage(album);
   });
 }
 
-function changeTrackImage(album) {
+_changeTrackImage = function(album) {
   var cover = album.images[0].url
   $('img.cover').prop('src', cover);
   $('.media-left img').prop('src', cover);
 };
 
-function handleTrackSearch (data) {
+_handleTrackSearch = function (data) {
   var first_result = data.tracks.items[0];
-  changeTrackName(first_result.name);
-  changeTrackArtist(first_result.artists[0]);
-  changeTrackPreview(first_result.preview_url);
-  searchTrackAlbum(first_result.album.id);
+  _changeTrackName(first_result.name);
+  _changeTrackArtist(first_result.artists[0]);
+  _changeTrackPreview(first_result.preview_url);
+  _searchTrackAlbum(first_result.album.id);
 };
 
-$('input.search-term').on('input', function(event) {
-  event.preventDefault();
-  var searchTerm = $('input').val();
-  var url = 'https://api.spotify.com/v1/search?type=track&q=' + searchTerm;  
-  $.get(url, handleTrackSearch);
-});
+Player.prototype.searchTrack = function () {
+  $.get(this.url, _handleTrackSearch);
+}
 
 $('.btn-play').on('click', function() {
   var audio = document.querySelector('audio');
