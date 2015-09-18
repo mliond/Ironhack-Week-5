@@ -1,43 +1,109 @@
-header {
-  height: 85px;
-  background-color: white;
-  border-bottom: 1px solid lightgrey;
+.widget {
+  width: 300px;
+  margin: 10px auto 0;
+  border-radius: 5px;
+  overflow: hidden;
+  display: block;
 }
 
-main {
-  height: 78%;
-  padding-top: 25px;
-  background-color: white;
+.header {
+  height: 78px;
+  background-color: #ccc;
+  position: relative;
+  font-size: 12px;
 }
 
-footer {
+.btn-play {
+  margin: 9px;
+  width: 60px;
   height: 60px;
-  background-color: white;
-  display: table;
-  table-layout: fixed;
+  float: left;
+  border-radius: 50px;
+  border: 1px solid #3c3c3c;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-footer p.text {
-  display:table-cell;
-  vertical-align:middle;
-  text-align:center;
+.btn-play:after {
+  content: ' ';
+  position: relative;
+  display: block;
+  width: 0px;
+  height: 0px;
+  margin-left: 50%;
+  margin-top: 50%;
+  left: -10px;
+  top: -18px;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-left: 30px solid #3c3c3c;
 }
 
-input.search-term {
-  width: 100%;
-  height: 80px;
-  font-size: 60px;
-  margin-left: 10px;
-  margin-bottom: 25px;
-  border: 0px;
+.btn-play:hover {
+  cursor: pointer;
+  border-color: #666;
 }
 
-.controls {
-  padding-top: 25px;
+.btn-play:hover:after {
+  border-left-color: #666;
 }
 
-.track-name, .track-artist {
-  font-size: 60px;
+.btn-play:active:after {
+  border-left-color: #000;
+}
+
+.btn-play.playing:before, .btn-play.playing:after {
+  width: 9px;
+  height: 36px;
+  background-color: #3c3c3c;
+  position: absolute;
+  content: "";
+  top: 22px;
+  left: 27px;
+  border: 0;
+  margin: 0;
+}
+
+.btn-play.playing:after {
+  left: 43px;
+}
+
+.btn-play.playing:hover:before, .btn-play.playing:hover:after {
+  background-color: #666;
+}
+
+.btn-play.playing:active:before, .btn-play.playing:active:after {
+  background-color: #000;
+}
+
+.btn-play.disabled {
+  border-color: #888;
+}
+
+.btn-play.disabled:hover {
+  cursor: auto;
+}
+
+.btn-play.disabled:after {
+  border-left-color: #888;
+}
+
+.metadata {
+  display: inline-block;
+  padding: 10px;
+  width: calc(100% - 100px);
+}
+
+.title, .author {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+  line-height: 1.4em;
+  height: 1.4em;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .author {
@@ -45,7 +111,7 @@ input.search-term {
 }
 
 .seekbar {
-  margin-top: 12px;
+  margin-top: 5px;
   width: 100%;
 }
 
@@ -55,7 +121,9 @@ input.search-term {
 }
 
 .cover img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
   left: 0;
   border: 0;
 }
@@ -66,7 +134,7 @@ audio {
 
 progress {
   width: 100%;
-  height: 10px;
+  height: 5px;
   padding: 0;
   background-color: #3e3e40;
   position: relative;
