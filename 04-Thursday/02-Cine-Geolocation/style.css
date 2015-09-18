@@ -1,0 +1,20 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#map {
+  height: 50%;
+}
+
+header {
+  height: 80px;
+  background-color: pink;
+  color: white;
+}
+
+footer {
+  height: 60px;
+  background-color: pink;
+  color: white;
+}
