@@ -49,14 +49,14 @@ Player.prototype.searchTrack = function () {
   $.get(this.url, _handleTrackSearch);
 }
 
-$('.btn-play').on('click', function() {
+$('button.play').on('click', function() {
   var audio = document.querySelector('audio');
   if(audio.paused) {
     audio.play();
-    $(this).addClass('playing');
+    $('button.play span#button').removeClass('glyphicon-play').addClass('glyphicon-pause');
   } else {
     audio.pause();
-    $(this).removeClass('playing');
+    $('button.play span#button').removeClass('glyphicon-pause').addClass('glyphicon-play');
   }
 });
 
